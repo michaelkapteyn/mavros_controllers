@@ -260,6 +260,7 @@ void geometricCtrl::computeBodyRateCmd(bool ctrl_mode){
   errorPos_ = mavPos_ - targetPos_;
   errorVel_ = mavVel_ - targetVel_;
   a_ref = targetAcc_;
+  groundvel << targetVel_(0), targetVel_(1), 0.0;
 
   if(use_dob_){
     /// Compute BodyRate commands using disturbance observer
@@ -357,6 +358,22 @@ Eigen::Vector4d geometricCtrl::acc2quaternion(Eigen::Vector3d vector_acc, double
   rotmat << xb_des(0), yb_des(0), zb_des(0),
             xb_des(1), yb_des(1), zb_des(1),
             xb_des(2), yb_des(2), zb_des(2);
+  quat = rot2Quaternion(rotmat);
+  yb_des = zb_des.cross(xb_des) / (zb_des.cross(xb_des)).norm();
+  return quat;
+}
+
+Eigen::Vector4d geometricCtrl::acc2quaternion(Eigen::Vector3d vector_acc, Eigen::Vector3d heading_vec) {
+  Eigen::Vector4d quat;
+  Eigen::Vector3d zb_des, yb_des, xb_des, yc;
+  Eigen::Matrix3d rotmat;
+  heading_vec = (1/heading_vec.norm()) * heading_vec;
+  yc = Eigen::Vector3d::UnitZ().cross(heading_vec);
+  zb_des = vector_acc / vector_acc.norm();
+  xb_des = yc.cross(zb_des) / ( yc.cross(zb_des) ).norm();
+  rotmat << xb_des(0), yb_des(0), zb_des(0),
+          xb_des(1), yb_des(1), zb_des(1),
+          xb_des(2), yb_des(2), zb_des(2);
   quat = rot2Quaternion(rotmat);
   yb_des = zb_des.cross(xb_des) / (zb_des.cross(xb_des)).norm();
   return quat;
