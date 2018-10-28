@@ -1,5 +1,8 @@
 image: ros:kinetic-robot
 
+variables:
+  USE_ROSDEP: "true"
+
 before_script:
   - git clone https://gitlab.com/VictorLamoine/ros_gitlab_ci.git
   - source ros_gitlab_ci/gitlab-ci.bash >/dev/null
