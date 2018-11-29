@@ -28,6 +28,8 @@
 #include <controller_msgs/FlatTarget.h>
 #include <std_srvs/SetBool.h>
 #include <gazebo_msgs/ModelStates.h>
+#include <trajectory_msgs/MultiDOFJointTrajectoryPoint.h>
+#include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #define MODE_ROTORTHRUST  1
 #define MODE_BODYRATE     2
@@ -42,6 +44,7 @@ class geometricCtrl
     ros::NodeHandle nh_private_;
     ros::Subscriber referenceSub_;
     ros::Subscriber flatreferenceSub_;
+    ros::Subscriber multiDOFJointSub_;
     ros::Subscriber mavstateSub_;
     ros::Subscriber mavposeSub_, gzmavposeSub_;
     ros::Subscriber mavtwistSub_;
@@ -90,6 +93,7 @@ class geometricCtrl
     void odomCallback(const nav_msgs::OdometryConstPtr& odomMsg);
     void targetCallback(const geometry_msgs::TwistStamped& msg);
     void flattargetCallback(const controller_msgs::FlatTarget& msg);
+    void multiDOFJointCallback(const trajectory_msgs::MultiDOFJointTrajectory& msg);
     void keyboardCallback(const geometry_msgs::Twist& msg);
     void cmdloopCallback(const ros::TimerEvent& event);
     void mavstateCallback(const mavros_msgs::State::ConstPtr& msg);
