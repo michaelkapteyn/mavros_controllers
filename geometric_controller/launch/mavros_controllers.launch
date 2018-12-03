@@ -18,6 +18,8 @@
         <remap if="$(eval arg('use_vicon') == 1)" from="/mavros/local_position/pose" to="/mavros/vision_pose/pose" />
         <remap if="$(eval arg('use_vicon') == 1)" from="/mavros/local_position/velocity" to="/mavros/vision_pose/twist" />
         <param name="ctrl_mode" value="$(arg command_input)" />
+        <param name="Kp_z" value="1." />
+        <!-- <param name="attctrl_constant" value="0.05" /> -->
 	</node>
 
     <!-- <node pkg="reinforce_mav" type="trajectory_publisher" name="trajectory_publisher" output="screen">

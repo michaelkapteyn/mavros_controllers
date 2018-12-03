@@ -63,7 +63,7 @@ geometricCtrl::geometricCtrl(const ros::NodeHandle& nh, const ros::NodeHandle& n
   nh_.param<double>("/geometric_controller/dob/max_dhat", dhat_max, 10.0);
   nh_.param<double>("/geometric_controller/dob/min_dhat", dhat_min, -10.0);
 
-  targetPos_ << 0.0, 0.0, 1; //Initial Position
+  targetPos_ << 0.0, 0.0, 2.0; //Initial Position
   targetVel_ << 0.0, 0.0, 0.0;
   g_ << 0.0, 0.0, -9.8;
   Kpos_ << -Kpos_x_, -Kpos_y_, -Kpos_z_;
